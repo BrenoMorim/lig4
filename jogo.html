@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ligue 4</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <img class="cabecalho__logo" role="heading" src="assets/logo.png" alt="Logo do Ligue 4">
+    </header>
+    <main class="container">
+        <section class="jogo container">
+            <table class="jogo__matriz">
+            </table>
+            <p class="jogo__texto">Vez do jogador: <span id="jogador-da-vez"></span></p>
+        </section>
+        <section class="final fundo--azul oculto">
+            <h2 class="final__texto">O vencedor foi:</h2>
+            <h3 class="final__texto" id="ganhador"></h3>
+            <button class="final__botao fundo--amarelo">Voltar para o Início</button>
+        </section>
+    </main>
+    <script src="criarMatrizJogo.js"></script>
+    <script src="jogo.js"></script>
+</body>
+</html>

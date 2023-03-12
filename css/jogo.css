@@ -1,0 +1,91 @@
+.jogo {
+    padding: 2rem 0;
+    gap: 2rem;
+}
+
+.jogo__texto {
+    font-size: 2rem;
+    font-weight: 300;
+    padding: .5rem 1rem;
+}
+
+.matriz__linha {
+    height: 2.25rem;
+}
+
+.matriz__celula {
+    height: 2.25rem;
+    width: 2.25rem;
+    border-left: 3px solid #222222;
+    border-right: 3px solid #222222;
+    padding: 0.125rem;
+}
+
+.matriz__botao {
+    height: 2.25rem;
+    width: 2.25rem;
+    font-size: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: 500ms all;
+}
+
+.matriz__botao:hover {
+    transform: scale(1.1);
+    color: #999999;
+}
+
+.matriz__ficha {
+    height: 2rem;
+    width: 2rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .matriz__celula {
+        height: 4rem;
+        width: 4rem;
+        padding: .5rem;
+    }
+    .matriz__linha {
+        height: 4rem;
+    }
+    .matriz__ficha {
+        height: 3.5rem;
+        width: 3.5rem;
+    }
+}
+
+.final {
+    display: none;
+    flex-direction: column;
+    z-index: 3;
+    width: 60vw;
+    height: 50vh;
+    max-width: 700px;
+    max-height: 500px;
+    left: calc(60vw) / 2;
+    top: 25vh;
+    position: absolute;
+    padding: 1rem;
+    gap: 2rem;
+    justify-content: space-around;
+}
+
+.final__texto {
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.final__botao {
+    font-size: 1.75rem;
+    font-weight: 300;
+    border-radius: 1.25rem;
+    padding: .5rem 1rem;
+    transition: all 500ms;
+}
+
+.final__botao:hover {
+    transform: scale(1.05);
+}

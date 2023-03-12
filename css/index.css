@@ -1,0 +1,69 @@
+.cabecalho {
+    max-height: 15vh;
+}
+
+.cabecalho__logo {
+    max-height: 15vh;
+    cursor: pointer;
+    transition: all 500ms;
+}
+
+.cabecalho__logo:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
+.chamada {
+    align-items: flex-start;
+    row-gap: 2rem;
+    max-width: 750px;
+}
+
+.chamada__texto {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 2.5rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+@media screen  and (max-width: 1024px) {
+    .chamada__texto {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+    }
+}
+
+.chamada__botoes {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.chamada__botao {
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 1.5rem;
+    padding: .5rem 1rem;
+    transition: all 500ms;
+}
+
+@media screen and (max-width: 1024px) {
+    .chamada__botao {
+        font-size: 1.25rem;
+        
+    }
+}
+
+.chamada__botao:hover {
+    background-color: transparent;
+    transform: scale(1.05);
+}
+
+.chamada__ficha {
+    max-height: 3rem;
+}

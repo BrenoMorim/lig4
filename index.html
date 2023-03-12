@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ligue 4</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <img class="cabecalho__logo" role="heading" src="assets/logo.png" alt="Logo do Ligue 4">
+    </header>
+    <main class="container">
+        <section class="chamada container">
+            <p class="chamada__texto fundo--azul">O objetivo do jogo é empilhar suas fichas nas colunas até conseguir colocar 4 fichas ligadas, na horizontal, vertical ou diagonal.</p>
+            <div class="chamada__botoes">
+                <button class="chamada__botao fundo--amarelo" id="jogar-ia">
+                    <img src="/assets/azul.png" class="chamada__ficha" aria-hidden="true">
+                    <span>Jogar contra a IA</span>
+                </button>
+                <button class="chamada__botao fundo--azul" id="jogar-amigo">
+                    <img src="/assets/amarelo.png" class="chamada__ficha" aria-hidden="true">
+                    <span>Jogar contra um Amigo</span>
+                </button>
+            </div>
+            <p class="chamada__texto fundo--amarelo">Você pode jogar com um amigo se estiver acompanhado ou contra uma inteligência artificial invencível =)</p>
+        </section>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>
