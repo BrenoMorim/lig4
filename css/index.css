@@ -50,6 +50,8 @@
     border-radius: 1.5rem;
     padding: .5rem 1rem;
     transition: all 500ms;
+    color: #000000;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 1024px) {

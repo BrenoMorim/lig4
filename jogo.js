@@ -12,6 +12,8 @@ const estado = [
 
 let jogadas = 0;
 
+const oponente = document.location.search.includes("ia") ? "ia" : "amigo";
+
 function getJogadorDaVez(jogadas) {
     if (jogadas % 2 == 0) 
         return "azul";
@@ -27,7 +29,6 @@ function atualizaTextoJogadorDaVez() {
 }
 
 function adicionarFicha(posicao) {
-    if (estado[0][posicao] !== "vazio" || jogoAcabou()) return;
     let i = linhas - 1;
     while (i >= 0) {
         if (estado[i][posicao] === 'vazio') {
@@ -43,26 +44,35 @@ function adicionarFicha(posicao) {
     ficha.className = "matriz__ficha";
     celula.appendChild(ficha);
     atualizaTextoJogadorDaVez();
-    if (jogoAcabou()) {
-        mostraTelaFinal(getGanhador());
+    if (jogoAcabou(estado, jogadas)) {
+        mostraTelaFinal(getGanhador(estado));
     }
 }
 
-function jogoAcabou() {
-    if (jogadas >= (linhas * colunas)) {
+function recebeAcaoDoUsuario(posicao) {
+    if (estado[0][posicao] !== "vazio" || jogoAcabou(estado, jogadas)) return;
+    if (oponente === "ia" && getJogadorDaVez(jogadas) === "amarelo") return;
+    adicionarFicha(posicao);
+    if (oponente == "ia") {
+        realizaJogadaIA();
+    }
+}
+
+function jogoAcabou(estadoAtual, numeroJogadas) {
+    if (numeroJogadas >= (linhas * colunas)) {
         return true;
     }
-    if (getGanhador() !== "nenhum") {
+    if (getGanhador(estadoAtual) !== "nenhum") {
         return true;
     }
     return false;
 }
 
-function getGanhador() {
-    const ganhadorHorizontal = getGanhadorLinhaReta(true);
-    const ganhadorVertical = getGanhadorLinhaReta(false);
-    const ganhadorDiagonal = getGanhadorDiagonal();
-    const ganhadorDiagonalInversa = getGanhadorDiagonalInversa();
+function getGanhador(estadoAtual) {
+    const ganhadorHorizontal = getGanhadorLinhaReta(estadoAtual, true);
+    const ganhadorVertical = getGanhadorLinhaReta(estadoAtual, false);
+    const ganhadorDiagonal = getGanhadorDiagonal(estadoAtual);
+    const ganhadorDiagonalInversa = getGanhadorDiagonalInversa(estadoAtual);
     
     if (ganhadorHorizontal !== "nenhum") {
         return ganhadorHorizontal;
@@ -77,7 +87,7 @@ function getGanhador() {
     return "nenhum";
 }
 
-function getGanhadorLinhaReta(horizontal = true) {
+function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
     let iMaximo = colunas;
     let jMaximo = linhas;
     if (horizontal) {
@@ -88,7 +98,7 @@ function getGanhadorLinhaReta(horizontal = true) {
         let contagemAzul = 0;
         let contagemAmarelo = 0;
         for (let j = 0; j < jMaximo; j++) {
-            const celula = horizontal ? estado[i][j] : estado[j][i];
+            const celula = horizontal ? estadoAtual[i][j] : estadoAtual[j][i];
             if (celula == "azul") {
                 contagemAzul++;
                 if (contagemAzul >= 4) {
@@ -110,12 +120,12 @@ function getGanhadorLinhaReta(horizontal = true) {
     return "nenhum";
 }
 
-function getGanhadorDiagonal() {
+function getGanhadorDiagonal(estadoAtual) {
     for (let k = 0; k < linhas; k++) {
 
         for (let i = linhas - 1; i >= 0; i--) {    
             for (let j = 0; j < i; j++) {
-                const celula = estado[i - j][j + k];
+                const celula = estadoAtual[i - j][j + k];
                 if (celula == "azul") {
                     contagemAzul++;
                     if (contagemAzul >= 4) {
@@ -139,11 +149,11 @@ function getGanhadorDiagonal() {
     return "nenhum";
 }
 
-function getGanhadorDiagonalInversa() {
+function getGanhadorDiagonalInversa(estadoAtual) {
     for (let i = linhas - 1; i >= 0; i--) {
         for (let j = colunas - 1; j >= 0; j--) {
             for (let k = 0; (i - k >= 0) && (j - k >= 0); k++) {
-                const celula = estado[i - k][j - k];
+                const celula = estadoAtual[i - k][j - k];
                 if (celula == "azul") {
                     contagemAzul++;
                     if (contagemAzul >= 4) {
@@ -183,12 +193,58 @@ function mostraTelaFinal(ganhador) {
     document.getElementById("ganhador").textContent = ganhador;
 }
 
+function realizaJogadaIA() {
+    // TODO
+}
+
+function getPossiveisJogadas(estadoAtual) {
+    const jogadas = [];
+    estadoAtual[0].forEach(posicao => {
+        if (posicao === "vazio") jogadas.push(posicao);
+    });
+    return jogadas;
+}
+
+function resultadoJogada(estadoAtual, posicao) {
+    const resultado = JSON.parse(JSON.stringify(estadoAtual));
+    let i = linhas - 1;
+    while (i >= 0) {
+        if (resultado[i][posicao] === 'vazio') {
+            resultado[i][posicao] = getJogadorDaVez(jogadas);
+            break;
+        }
+        i--;
+    }
+    return resultado;
+}
+
+function utilidade(estadoAtual) {
+    const ganhador = getGanhador(estadoAtual);
+    if (ganhador === "azul") {
+        return 1;
+    } else if (ganhador === "amarelo") {
+        return -1;
+    }
+    return 0;
+}
+
+function minimax(estadoAtual) {
+    // TODO
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     atualizaTextoJogadorDaVez();
     document.querySelectorAll(".matriz__botao").forEach(botao => {
-        botao.addEventListener('click', () => adicionarFicha(Number(botao.id.at(-1))));
-    });
-    document.querySelector(".final__botao").addEventListener("click", () => {
-        document.location.href = '/';
+        botao.addEventListener('click', () => recebeAcaoDoUsuario(Number(botao.id.at(-1))));
     });
 });
+
+class Node {
+    
+    constructor(estadoAtual, pai, jogada) {
+        this.estadoAtual = estadoAtual;
+        this.pai = pai;
+        this.jogada = jogada;
+    }
+
+}

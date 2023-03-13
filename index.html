@@ -16,18 +16,17 @@
         <section class="chamada container">
             <p class="chamada__texto fundo--azul">O objetivo do jogo é empilhar suas fichas nas colunas até conseguir colocar 4 fichas ligadas, na horizontal, vertical ou diagonal.</p>
             <div class="chamada__botoes">
-                <button class="chamada__botao fundo--amarelo" id="jogar-ia">
-                    <img src="/assets/azul.png" class="chamada__ficha" aria-hidden="true">
+                <a class="chamada__botao fundo--amarelo" href="/jogo.html?oponente=ia" id="jogar-ia">
+                    <img src="assets/azul.png" class="chamada__ficha" aria-hidden="true">
                     <span>Jogar contra a IA</span>
-                </button>
-                <button class="chamada__botao fundo--azul" id="jogar-amigo">
+                </a>
+                <a class="chamada__botao fundo--azul" href="/jogo.html?oponente=amigo" id="jogar-amigo">
                     <img src="/assets/amarelo.png" class="chamada__ficha" aria-hidden="true">
                     <span>Jogar contra um Amigo</span>
-                </button>
+                </a>
             </div>
             <p class="chamada__texto fundo--amarelo">Você pode jogar com um amigo se estiver acompanhado ou contra uma inteligência artificial invencível =)</p>
         </section>
     </main>
-    <script src="scripts.js"></script>
 </body>
 </html>

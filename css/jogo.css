@@ -84,6 +84,11 @@
     border-radius: 1.25rem;
     padding: .5rem 1rem;
     transition: all 500ms;
+    text-align: center;
+    color: #000000;
+    align-self: center;
+    width: 65%;
+    text-decoration: none;
 }
 
 .final__botao:hover {
