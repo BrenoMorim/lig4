@@ -44,20 +44,22 @@
 }
 
 .chamada__botao {
-    font-size: 1.5rem;
-    font-weight: 700;
     cursor: pointer;
     border-radius: 1.5rem;
     padding: .5rem 1rem;
     transition: all 500ms;
+}
+
+.chamada__botao, .chamada__botao span {
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #000000;
     text-decoration: none;
 }
 
 @media screen and (max-width: 1024px) {
     .chamada__botao {
-        font-size: 1.25rem;
-        
+        font-size: 1.25rem;       
     }
 }
 

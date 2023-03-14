@@ -1,12 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelector(".cabecalho__logo").addEventListener("click", () => {
-        document.location.href = '/';
+        // Ambiente de produção
+        if (estaEmProducao()) {
+            document.location.href = '/lig4'
+        } else {
+            // Ambiente de Desenvolvimento
+            document.location.href = '/';
+        }
     });
-    
+
+    const link = document.getElementById("voltar-inicio");
+    if (estaEmProducao()) {
+        link.setAttribute("href", "/lig4");
+    } else {
+        link.setAttribute("href", "/")
+    }
+
     criarMatrizJogo();
 
 });
+
+function estaEmProducao() {
+    return !(document.location.href.includes("localhost") || document.location.href.includes("127.0.0.1"));
+}
 
 function criarMatrizJogo() {
     const matriz = document.querySelector(".jogo__matriz");
