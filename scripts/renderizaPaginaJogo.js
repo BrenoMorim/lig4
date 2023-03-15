@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (estaEmProducao()) {
         link.setAttribute("href", "/lig4");
     } else {
-        link.setAttribute("href", "/")
+        link.setAttribute("href", "/");
     }
 
     document.getElementById("jogar-novamente").addEventListener("click", () => {

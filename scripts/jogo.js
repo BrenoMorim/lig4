@@ -1,13 +1,19 @@
 const colunas = 9;
 const linhas = 6;
 
+const elementos = {
+    amarelo: "amarelo",
+    azul: "azul",
+    vazio: "vazio"
+};
+
 const estado = [
-    "vazio ".repeat(colunas).trim().split(' '),
-    "vazio ".repeat(colunas).trim().split(' '),
-    "vazio ".repeat(colunas).trim().split(' '),
-    "vazio ".repeat(colunas).trim().split(' '),
-    "vazio ".repeat(colunas).trim().split(' '),
-    "vazio ".repeat(colunas).trim().split(' ')
+    `${elementos.vazio} `.repeat(colunas).trim().split(' '),
+    `${elementos.vazio} `.repeat(colunas).trim().split(' '),
+    `${elementos.vazio} `.repeat(colunas).trim().split(' '),
+    `${elementos.vazio} `.repeat(colunas).trim().split(' '),
+    `${elementos.vazio} `.repeat(colunas).trim().split(' '),
+    `${elementos.vazio} `.repeat(colunas).trim().split(' ')
 ];
 
 let jogadas = 0;
@@ -16,8 +22,8 @@ const oponente = document.location.search.includes("ia") ? "ia" : "amigo";
 
 function getJogadorDaVez(jogadas) {
     if (jogadas % 2 == 0) 
-        return "azul";
-    return "amarelo";
+        return elementos.azul;
+    return elementos.amarelo;
 }
 
 function atualizaTextoJogadorDaVez() {
@@ -31,7 +37,7 @@ function atualizaTextoJogadorDaVez() {
 function adicionarFicha(posicao) {
     let i = linhas - 1;
     while (i >= 0) {
-        if (estado[i][posicao] === 'vazio') {
+        if (estado[i][posicao] === elementos.vazio) {
             estado[i][posicao] = getJogadorDaVez(jogadas);
             jogadas++;
             break;
@@ -53,15 +59,15 @@ function getJogadas(estadoAtual) {
     let contagem = 0;
     for (let i = 0; i < linhas; i++) {
         for (let j = 0; j < colunas; j++) {
-            if (estadoAtual[i][j] !== "vazio") contagem++;
+            if (estadoAtual[i][j] !== elementos.vazio) contagem++;
         }
     }
     return contagem;
 }
 
 function recebeAcaoDoUsuario(posicao) {
-    if (estado[0][posicao] !== "vazio" || jogoAcabou(estado)) return;
-    if (oponente === "ia" && getJogadorDaVez(jogadas) === "amarelo") return;
+    if (estado[0][posicao] !== elementos.vazio || jogoAcabou(estado)) return;
+    if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) return;
     adicionarFicha(posicao);
 }
 
@@ -69,7 +75,7 @@ function jogoAcabou(estadoAtual) {
     if (getGanhador(estadoAtual) !== "nenhum") {
         return true;
     }
-    if (estadoAtual[0].join(' ').includes("vazio") === false) {
+    if (estadoAtual[0].join(' ').includes(elementos.vazio) === false) {
         return true;
     }
     return false;
@@ -106,18 +112,18 @@ function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
         let contagemAmarelo = 0;
         for (let j = 0; j < jMaximo; j++) {
             const celula = horizontal ? estadoAtual[i][j] : estadoAtual[j][i];
-            if (celula == "azul") {
+            if (celula == elementos.azul) {
                 contagemAzul++;
                 if (contagemAzul >= 4) {
-                    return "azul";
+                    return elementos.azul;
                 }
             } else {
                 contagemAzul = 0;
             }
-            if (celula == "amarelo") {
+            if (celula == elementos.amarelo) {
                 contagemAmarelo++;
                 if (contagemAmarelo >= 4) {
-                    return "amarelo";
+                    return elementos.amarelo;
                 }
             } else {
                 contagemAmarelo = 0;
@@ -134,18 +140,18 @@ function getGanhadorDiagonal(estadoAtual) {
         for (let i = linhas - 1; i >= 0; i--) {    
             for (let j = 0; j < i; j++) {
                 const celula = estadoAtual[i - j][j + k];
-                if (celula == "azul") {
+                if (celula === elementos.azul) {
                     contagemAzul++;
                     if (contagemAzul >= 4) {
-                        return "azul";
+                        return elementos.azul;
                     }
                 } else {
                     contagemAzul = 0;
                 }
-                if (celula == "amarelo") {
+                if (celula === elementos.amarelo) {
                     contagemAmarelo++;
                     if (contagemAmarelo >= 4) {
-                        return "amarelo";
+                        return elementos.amarelo;
                     }
                 } else {
                     contagemAmarelo = 0;
@@ -164,18 +170,18 @@ function getGanhadorDiagonalInversa(estadoAtual) {
         for (let j = colunas - 1; j >= 0; j--) {
             for (let k = 0; (i - k >= 0) && (j - k >= 0); k++) {
                 const celula = estadoAtual[i - k][j - k];
-                if (celula === "azul") {
+                if (celula === elementos.azul) {
                     contagemAzul++;
                     if (contagemAzul >= 4) {
-                        return "azul";
+                        return elementos.azul;
                     }
                 } else {
                     contagemAzul = 0;
                 }
-                if (celula === "amarelo") {
+                if (celula === elementos.amarelo) {
                     contagemAmarelo++;
                     if (contagemAmarelo >= 4) {
-                        return "amarelo";
+                        return elementos.amarelo;
                     }
                 } else {
                     contagemAmarelo = 0;
@@ -189,16 +195,16 @@ function getGanhadorDiagonalInversa(estadoAtual) {
 
 function mostraTelaFinal(ganhador) {
     const telaFinal = document.querySelector(".final");
-    const botaoFinal = document. querySelector(".final__botao");
+    const botaoFinal = document.querySelectorAll(".final__botao");
 
     telaFinal.style.display = "flex";
 
-    if (ganhador == "amarelo") {
+    if (ganhador === elementos.amarelo) {
         telaFinal.classList.add("fundo--amarelo");
         telaFinal.classList.remove("fundo--azul");
 
-        botaoFinal.classList.add("fundo--azul");
-        botaoFinal.classList.add("fundo--amarelo");
+        botaoFinal.forEach(botao => botao.classList.add("fundo--azul"));
+        botaoFinal.forEach(botao => botao.classList.add("fundo--amarelo"));
     }
     document.getElementById("ganhador").textContent = ganhador;
 }
@@ -212,7 +218,7 @@ function realizaJogadaIA() {
 function getPossiveisJogadas(estadoAtual) {
     const jogadas = [];
     estadoAtual[0].forEach((valor, posicao) => {
-        if (valor === "vazio") jogadas.push(posicao);
+        if (valor === elementos.vazio) jogadas.push(posicao);
     });
     return jogadas;
 }
@@ -221,7 +227,7 @@ function resultadoJogada(estadoAtual, posicao) {
     const resultado = JSON.parse(JSON.stringify(estadoAtual));
     let i = linhas - 1;
     while (i >= 0) {
-        if (resultado[i][posicao] === 'vazio') {
+        if (resultado[i][posicao] === elementos.vazio) {
             resultado[i][posicao] = getJogadorDaVez(jogadas);
             break;
         }
@@ -232,9 +238,9 @@ function resultadoJogada(estadoAtual, posicao) {
 
 function utilidade(estadoAtual) {
     const ganhador = getGanhador(estadoAtual);
-    if (ganhador === "azul") {
+    if (ganhador === elementos.azul) {
         return 1;
-    } else if (ganhador === "amarelo") {
+    } else if (ganhador === elementos.amarelo) {
         return -1;
     }
     return 0;
@@ -249,7 +255,7 @@ function minimax(estadoAtual) {
     valores = nodes.map(node => minimaxRecursivo(node, 4));
 
     let index;
-    if (getJogadorDaVez(getJogadas(estadoAtual)) === 'azul') {
+    if (getJogadorDaVez(getJogadas(estadoAtual)) === elementos.azul) {
         index = valores.indexOf(Math.max(...valores));
     } else {
         index = valores.indexOf(Math.min(...valores));
@@ -267,7 +273,7 @@ function minimaxRecursivo(node, profundidade) {
         return utilidade(node.estadoAtual);
     }
 
-    if (getJogadorDaVez(getJogadas(node.estadoAtual)) === "azul") {
+    if (getJogadorDaVez(getJogadas(node.estadoAtual)) === elementos.azul) {
         let valor = -100;
         getPossiveisJogadas(node.estadoAtual)
             .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
@@ -291,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".matriz__botao").forEach(botao => {
         botao.addEventListener('click', () => {
             recebeAcaoDoUsuario(Number(botao.id.at(-1)));
-            if (oponente === "ia" && getJogadorDaVez(jogadas) === "amarelo") {
+            if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) {
                 realizaJogadaIA();
             }
         });
