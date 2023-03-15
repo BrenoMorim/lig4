@@ -63,9 +63,6 @@ function recebeAcaoDoUsuario(posicao) {
     if (estado[0][posicao] !== "vazio" || jogoAcabou(estado)) return;
     if (oponente === "ia" && getJogadorDaVez(jogadas) === "amarelo") return;
     adicionarFicha(posicao);
-    if (oponente == "ia") {
-        realizaJogadaIA();
-    }
 }
 
 function jogoAcabou(estadoAtual) {
@@ -131,8 +128,9 @@ function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
 }
 
 function getGanhadorDiagonal(estadoAtual) {
+    let contagemAmarelo = 0;
+    let contagemAzul = 0;
     for (let k = 0; k < linhas; k++) {
-
         for (let i = linhas - 1; i >= 0; i--) {    
             for (let j = 0; j < i; j++) {
                 const celula = estadoAtual[i - j][j + k];
@@ -160,11 +158,13 @@ function getGanhadorDiagonal(estadoAtual) {
 }
 
 function getGanhadorDiagonalInversa(estadoAtual) {
+    let contagemAzul = 0;
+    let contagemAmarelo = 0;
     for (let i = linhas - 1; i >= 0; i--) {
         for (let j = colunas - 1; j >= 0; j--) {
             for (let k = 0; (i - k >= 0) && (j - k >= 0); k++) {
                 const celula = estadoAtual[i - k][j - k];
-                if (celula == "azul") {
+                if (celula === "azul") {
                     contagemAzul++;
                     if (contagemAzul >= 4) {
                         return "azul";
@@ -172,7 +172,7 @@ function getGanhadorDiagonalInversa(estadoAtual) {
                 } else {
                     contagemAzul = 0;
                 }
-                if (celula == "amarelo") {
+                if (celula === "amarelo") {
                     contagemAmarelo++;
                     if (contagemAmarelo >= 4) {
                         return "amarelo";
@@ -203,9 +203,10 @@ function mostraTelaFinal(ganhador) {
     document.getElementById("ganhador").textContent = ganhador;
 }
 
-async function realizaJogadaIA() {
-    const resultado = minimax(JSON.parse(JSON.stringify(estado)));
-    adicionarFicha(await resultado);
+function realizaJogadaIA() {
+    if (!jogoAcabou(estado)) {
+        adicionarFicha(minimax(estado));
+    }
 }
 
 function getPossiveisJogadas(estadoAtual) {
@@ -288,7 +289,12 @@ function minimaxRecursivo(node, profundidade) {
 document.addEventListener("DOMContentLoaded", () => {
     atualizaTextoJogadorDaVez();
     document.querySelectorAll(".matriz__botao").forEach(botao => {
-        botao.addEventListener('click', () => recebeAcaoDoUsuario(Number(botao.id.at(-1))));
+        botao.addEventListener('click', () => {
+            recebeAcaoDoUsuario(Number(botao.id.at(-1)));
+            if (oponente === "ia" && getJogadorDaVez(jogadas) === "amarelo") {
+                realizaJogadaIA();
+            }
+        });
     });
 });
 
