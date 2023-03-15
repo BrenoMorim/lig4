@@ -33,7 +33,7 @@ function adicionarFicha(posicao) {
     while (i >= 0) {
         if (estado[i][posicao] === 'vazio') {
             estado[i][posicao] = getJogadorDaVez(jogadas);
-            jogadas ++;
+            jogadas++;
             break;
         }
         i--;
@@ -44,13 +44,23 @@ function adicionarFicha(posicao) {
     ficha.className = "matriz__ficha";
     celula.appendChild(ficha);
     atualizaTextoJogadorDaVez();
-    if (jogoAcabou(estado, jogadas)) {
+    if (jogoAcabou(estado)) {
         mostraTelaFinal(getGanhador(estado));
     }
 }
 
+function getJogadas(estadoAtual) {
+    let contagem = 0;
+    for (let i = 0; i < linhas; i++) {
+        for (let j = 0; j < colunas; j++) {
+            if (estadoAtual[i][j] !== "vazio") contagem++;
+        }
+    }
+    return contagem;
+}
+
 function recebeAcaoDoUsuario(posicao) {
-    if (estado[0][posicao] !== "vazio" || jogoAcabou(estado, jogadas)) return;
+    if (estado[0][posicao] !== "vazio" || jogoAcabou(estado)) return;
     if (oponente === "ia" && getJogadorDaVez(jogadas) === "amarelo") return;
     adicionarFicha(posicao);
     if (oponente == "ia") {
@@ -58,11 +68,11 @@ function recebeAcaoDoUsuario(posicao) {
     }
 }
 
-function jogoAcabou(estadoAtual, numeroJogadas) {
-    if (numeroJogadas >= (linhas * colunas)) {
+function jogoAcabou(estadoAtual) {
+    if (getGanhador(estadoAtual) !== "nenhum") {
         return true;
     }
-    if (getGanhador(estadoAtual) !== "nenhum") {
+    if (estadoAtual[0].join(' ').includes("vazio") === false) {
         return true;
     }
     return false;
@@ -193,14 +203,15 @@ function mostraTelaFinal(ganhador) {
     document.getElementById("ganhador").textContent = ganhador;
 }
 
-function realizaJogadaIA() {
-    // TODO
+async function realizaJogadaIA() {
+    const resultado = minimax(JSON.parse(JSON.stringify(estado)));
+    adicionarFicha(await resultado);
 }
 
 function getPossiveisJogadas(estadoAtual) {
     const jogadas = [];
-    estadoAtual[0].forEach(posicao => {
-        if (posicao === "vazio") jogadas.push(posicao);
+    estadoAtual[0].forEach((valor, posicao) => {
+        if (valor === "vazio") jogadas.push(posicao);
     });
     return jogadas;
 }
@@ -229,7 +240,49 @@ function utilidade(estadoAtual) {
 }
 
 function minimax(estadoAtual) {
-    // TODO
+    if (jogoAcabou(estadoAtual)) return undefined;
+    const nodes = getPossiveisJogadas(estadoAtual)
+        .map(jogada => {
+            return new Node(resultadoJogada(estadoAtual, jogada), undefined, jogada);
+        });
+    valores = nodes.map(node => minimaxRecursivo(node, 4));
+
+    let index;
+    if (getJogadorDaVez(getJogadas(estadoAtual)) === 'azul') {
+        index = valores.indexOf(Math.max(...valores));
+    } else {
+        index = valores.indexOf(Math.min(...valores));
+    }
+
+    let node = nodes[index];
+    while (node?.pai !== undefined) {
+        node = node.pai;
+    }
+    return node.jogada;
+}
+
+function minimaxRecursivo(node, profundidade) {
+    if (profundidade === 0 || jogoAcabou(node.estadoAtual)) {
+        return utilidade(node.estadoAtual);
+    }
+
+    if (getJogadorDaVez(getJogadas(node.estadoAtual)) === "azul") {
+        let valor = -100;
+        getPossiveisJogadas(node.estadoAtual)
+            .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
+            .forEach(nodeFilho => {
+                valor = Math.max(valor, minimaxRecursivo(nodeFilho, profundidade - 1))
+            });
+        return valor;
+    } else {
+        let valor = 100;
+        getPossiveisJogadas(node.estadoAtual)
+            .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
+            .forEach(nodeFilho => {
+                valor = Math.min(valor, minimaxRecursivo(nodeFilho, profundidade - 1))
+            });
+        return valor;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
