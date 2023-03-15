@@ -85,9 +85,12 @@
     padding: .5rem 1rem;
     transition: all 500ms;
     text-align: center;
+    font-family: 'League Spartan', sans-serif;
     color: #000000;
+    display: inline-block;
     align-self: center;
-    width: 65%;
+    min-width: 65%;
+    max-width: 80%;
     text-decoration: none;
 }
 

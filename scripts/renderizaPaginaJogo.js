@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
         link.setAttribute("href", "/")
     }
 
+    document.getElementById("jogar-novamente").addEventListener("click", () => {
+        document.location.reload();
+    });
+
     criarMatrizJogo();
 
 });

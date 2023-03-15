@@ -128,9 +128,9 @@ function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
 }
 
 function getGanhadorDiagonal(estadoAtual) {
-    let contagemAmarelo = 0;
-    let contagemAzul = 0;
     for (let k = 0; k < linhas; k++) {
+        let contagemAmarelo = 0;
+        let contagemAzul = 0;
         for (let i = linhas - 1; i >= 0; i--) {    
             for (let j = 0; j < i; j++) {
                 const celula = estadoAtual[i - j][j + k];
@@ -158,9 +158,9 @@ function getGanhadorDiagonal(estadoAtual) {
 }
 
 function getGanhadorDiagonalInversa(estadoAtual) {
-    let contagemAzul = 0;
-    let contagemAmarelo = 0;
     for (let i = linhas - 1; i >= 0; i--) {
+        let contagemAzul = 0;
+        let contagemAmarelo = 0;
         for (let j = colunas - 1; j >= 0; j--) {
             for (let k = 0; (i - k >= 0) && (j - k >= 0); k++) {
                 const celula = estadoAtual[i - k][j - k];
