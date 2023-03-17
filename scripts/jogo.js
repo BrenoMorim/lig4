@@ -84,8 +84,8 @@ function jogoAcabou(estadoAtual) {
 function getGanhador(estadoAtual) {
     const ganhadorHorizontal = getGanhadorLinhaReta(estadoAtual, true);
     const ganhadorVertical = getGanhadorLinhaReta(estadoAtual, false);
-    const ganhadorDiagonal = getGanhadorDiagonal(estadoAtual);
-    const ganhadorDiagonalInversa = getGanhadorDiagonalInversa(estadoAtual);
+    const ganhadorDiagonal = getGanhadorDiagonal(estadoAtual, false);
+    const ganhadorDiagonalInversa = getGanhadorDiagonal(estadoAtual, true);
     
     if (ganhadorHorizontal !== "nenhum") {
         return ganhadorHorizontal;
@@ -133,7 +133,17 @@ function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
     return "nenhum";
 }
 
-function getGanhadorDiagonal(estadoAtual) {
+function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
+    const estadoAtual = JSON.parse(JSON.stringify(estadoAtualParametro));
+    if (inversa) {
+        for (j = 0; j < colunas / 2; j++) {
+            for (i = 0; i < linhas; i++) {
+                let temp = estadoAtual[i][j];
+                estadoAtual[i][j] = estadoAtual[i][colunas - j - 1];
+                estadoAtual[i][colunas - j - 1] = temp;
+            }
+        }
+    }
     for (let k = 0; k < linhas; k++) {
         let contagemAmarelo = 0;
         let contagemAzul = 0;
@@ -159,44 +169,12 @@ function getGanhadorDiagonal(estadoAtual) {
             }
         }
     }
-    
-    return "nenhum";
-}
-
-function getGanhadorDiagonalInversa(estadoAtual) {
-    for (let i = linhas - 1; i >= 0; i--) {
-        let contagemAzul = 0;
-        let contagemAmarelo = 0;
-        for (let j = colunas - 1; j >= 0; j--) {
-            for (let k = 0; (i - k >= 0) && (j - k >= 0); k++) {
-                const celula = estadoAtual[i - k][j - k];
-                if (celula === elementos.azul) {
-                    contagemAzul++;
-                    if (contagemAzul >= 4) {
-                        return elementos.azul;
-                    }
-                } else {
-                    contagemAzul = 0;
-                }
-                if (celula === elementos.amarelo) {
-                    contagemAmarelo++;
-                    if (contagemAmarelo >= 4) {
-                        return elementos.amarelo;
-                    }
-                } else {
-                    contagemAmarelo = 0;
-                }
-            }
-        }
-    }
-    
     return "nenhum";
 }
 
 function mostraTelaFinal(ganhador) {
     const telaFinal = document.querySelector(".final");
     const botaoFinal = document.querySelectorAll(".final__botao");
-
     telaFinal.style.display = "flex";
 
     if (ganhador === elementos.amarelo) {
@@ -228,7 +206,7 @@ function resultadoJogada(estadoAtual, posicao) {
     let i = linhas - 1;
     while (i >= 0) {
         if (resultado[i][posicao] === elementos.vazio) {
-            resultado[i][posicao] = getJogadorDaVez(jogadas);
+            resultado[i][posicao] = getJogadorDaVez(getJogadas(estadoAtual));
             break;
         }
         i--;
@@ -252,15 +230,25 @@ function minimax(estadoAtual) {
         .map(jogada => {
             return new Node(resultadoJogada(estadoAtual, jogada), undefined, jogada);
         });
-    valores = nodes.map(node => minimaxRecursivo(node, 4));
 
-    let index;
+    let valores = nodes.map(node => minimaxRecursivo(node, 3));
+    const indices = [];
     if (getJogadorDaVez(getJogadas(estadoAtual)) === elementos.azul) {
-        index = valores.indexOf(Math.max(...valores));
+        const maximo = Math.max(...valores);
+        valores.forEach((valor, index) => {
+            if (valor === maximo) {
+                indices.push(index);
+            }
+        });
     } else {
-        index = valores.indexOf(Math.min(...valores));
+        const minimo = Math.min(...valores);
+        valores.forEach((valor, index) => {
+            if (valor === minimo) {
+                indices.push(index);
+            }
+        });
     }
-
+    const index = indices.at((Math.random() * 100) % indices.length)
     let node = nodes[index];
     while (node?.pai !== undefined) {
         node = node.pai;
