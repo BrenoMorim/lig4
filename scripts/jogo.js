@@ -144,12 +144,14 @@ function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
             }
         }
     }
-    for (let k = 0; k < linhas; k++) {
-        let contagemAmarelo = 0;
-        let contagemAzul = 0;
-        for (let i = linhas - 1; i >= 0; i--) {    
-            for (let j = 0; j < i; j++) {
-                const celula = estadoAtual[i - j][j + k];
+
+    for (let i = 0; i < linhas - 3; i++) {
+        for (let j = 0; j < colunas - 3; j++) {
+            let k = 0;
+            let contagemAzul = 0;
+            let contagemAmarelo = 0;
+            while (i + k < linhas && j + k < colunas) {
+                const celula = estadoAtual[i + k][j + k];
                 if (celula === elementos.azul) {
                     contagemAzul++;
                     if (contagemAzul >= 4) {
@@ -166,6 +168,7 @@ function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
                 } else {
                     contagemAmarelo = 0;
                 }
+                k++;
             }
         }
     }
