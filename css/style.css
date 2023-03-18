@@ -16,6 +16,21 @@ body, .container {
     align-items: center;
 }
 
+.cabecalho {
+    max-height: 15vh;
+}
+
+.cabecalho__logo {
+    max-height: 15vh;
+    cursor: pointer;
+    transition: all 500ms;
+}
+
+.cabecalho__logo:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
 .fundo--amarelo {
     background: rgba(255, 245, 106, 0.7);
     border-radius: 16px;

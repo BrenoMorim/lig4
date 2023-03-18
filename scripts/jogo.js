@@ -62,7 +62,9 @@ function adicionarFicha(posicao) {
     const celula = document.getElementById(`${i}x${posicao}`);
     const ficha = document.createElement("img");
     ficha.src = `assets/${estado[i][posicao]}.png`;
-    ficha.className = "matriz__ficha";
+    ficha.classList.add("matriz__ficha");
+    ficha.classList.add("animate__animated");
+    ficha.classList.add("animate__bounceIn");
     celula.appendChild(ficha);
     atualizaTextoJogadorDaVez();
     if (jogoAcabou(estado)) {

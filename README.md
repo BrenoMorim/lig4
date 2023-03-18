@@ -14,7 +14,7 @@ Um jogo online desenvolvido com HTML, CSS e JS puros. Usando o algoritmo Minimax
 
 ## Detalhes
 
-O projeto não utiliza nenhuma dependência externa nem nenhum gerenciador de pacotes para ser colocado em produção de forma mais fácil através do GitHub Pages. Por conta disso não é possível exportar e importar funções entre arquivos js, o que fez com que alguns arquivos ficassem muito extensos.
+O projeto não utiliza nenhuma dependência externa nem nenhum gerenciador de pacotes para ser colocado em produção de forma mais fácil através do GitHub Pages. Por conta disso não é possível exportar e importar funções entre arquivos js, o que fez com que alguns arquivos ficassem muito extensos. A biblioteca Animate.css foi utilizada para fazer as animações.
 
 ---
 
@@ -39,6 +39,7 @@ O projeto não utiliza nenhuma dependência externa nem nenhum gerenciador de pa
   - renderizaPaginaJogo.js: Renderiza o HTML da página de jogo dinamicamente
 - index.html: HTML da página inicial
 - jogo.html: HTML da página de jogo
+- favicon.ico: Ícone a ser mostrado na guia
 
 ---
 

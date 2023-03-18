@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
-    <header class="cabecalho">
+    <header class="cabecalho animate__animated animate__backInDown">
         <img class="cabecalho__logo" role="heading" src="assets/logo.png" alt="Logo do Ligue 4">
     </header>
     <main class="container">
@@ -19,9 +20,9 @@
             <!-- Tabela que representa o estado atual da partida -->
             <table class="jogo__matriz">
             </table>
-            <p class="jogo__texto">Vez do jogador: <span id="jogador-da-vez"></span></p>
+            <p class="jogo__texto animate__animated animate__backInUp">Vez do jogador: <span id="jogador-da-vez"></span></p>
         </section>
-        <section class="final fundo--azul oculto">
+        <section class="final fundo--azul animate__animated animate__bounceIn oculto">
             <h2 class="final__texto">O vencedor foi:</h2>
             <h3 class="final__texto" id="ganhador"></h3>
             <button id="jogar-novamente" class="final__botao fundo--amarelo">Jogar Novamente</button>
