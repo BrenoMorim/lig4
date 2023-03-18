@@ -58,6 +58,7 @@ function criarMatrizJogo() {
 
     // Adiciona os botões de ação
     const botoes = document.createElement("tr");
+    botoes.className = "matriz__botoes";
     for (k = 0; k < 9; k++) {
         const botao = document.createElement("td");
         botao.role = "button";
