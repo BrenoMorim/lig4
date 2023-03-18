@@ -20,12 +20,20 @@ let jogadas = 0;
 
 const oponente = document.location.search.includes("ia") ? "ia" : "amigo";
 
+/**
+ * Calcula qual é o jogador da vez, baseado no total
+ * de jogadas que já foram feitas 
+ */
 function getJogadorDaVez(jogadas) {
     if (jogadas % 2 == 0) 
         return elementos.azul;
     return elementos.amarelo;
 }
 
+/**
+ * Atualiza a visualização para mostrar de quem é a vez,
+ * mudando não só o texto mas também o estilo do fundo do texto
+ */
 function atualizaTextoJogadorDaVez() {
     const paragrafo = document.querySelector(".jogo__texto");
     const jogadorDaVez = getJogadorDaVez(jogadas);
@@ -34,6 +42,13 @@ function atualizaTextoJogadorDaVez() {
     paragrafo.classList.remove(`fundo--${getJogadorDaVez(jogadas + 1)}`);
 }
 
+/**
+ * Insere uma ficha da cor do jogador da vez em dada posição.
+ * Atualiza tanto o conteúdo HTML da tabela, quanto a representação na 
+ * variável JS estado
+ * 
+ * @param {Number} posicao: A posição na qual a ficha vai ser inserida 
+ */
 function adicionarFicha(posicao) {
     let i = linhas - 1;
     while (i >= 0) {
@@ -55,6 +70,13 @@ function adicionarFicha(posicao) {
     }
 }
 
+/**
+ * Calcula quantas jogadas já foram feitas na partida,
+ * contando o número de fichas na matriz
+ * 
+ * @param {string[][]} estadoAtual
+ * @returns Quantas jogadas foram feitas
+ */
 function getJogadas(estadoAtual) {
     let contagem = 0;
     for (let i = 0; i < linhas; i++) {
@@ -65,12 +87,24 @@ function getJogadas(estadoAtual) {
     return contagem;
 }
 
+/**
+ * Recebe e valida o input do usuário
+ * 
+ * @param {Number} posicao 
+ */
 function recebeAcaoDoUsuario(posicao) {
     if (estado[0][posicao] !== elementos.vazio || jogoAcabou(estado)) return;
     if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) return;
     adicionarFicha(posicao);
 }
 
+/**
+ * Checa se o jogo está em estado terminal, já com
+ * ganhador definido ou empatado
+ * 
+ * @param {string[][]} estadoAtual 
+ * @returns Se o jogo está acabado
+ */
 function jogoAcabou(estadoAtual) {
     if (getGanhador(estadoAtual) !== "nenhum") {
         return true;
@@ -81,6 +115,13 @@ function jogoAcabou(estadoAtual) {
     return false;
 }
 
+/**
+ * Retorna o ganhador da partida, retornando amarelo, azul ou
+ * nenhum, caso não houver ganhador ainda.
+ * 
+ * @param {string[][]} estadoAtual 
+ * @returns O ganhador dado o estado de uma partida
+ */
 function getGanhador(estadoAtual) {
     const ganhadorHorizontal = getGanhadorLinhaReta(estadoAtual, true);
     const ganhadorVertical = getGanhadorLinhaReta(estadoAtual, false);
@@ -100,6 +141,14 @@ function getGanhador(estadoAtual) {
     return "nenhum";
 }
 
+/**
+ * Verifica se há algum ganhador no estado atual, verificando
+ * se há 4 fichas alinhadas de forma horizontal ou vertical.
+ * 
+ * @param {string[][]} estadoAtual 
+ * @param {boolean} horizontal 
+ * @returns O ganhador dado o estado
+ */
 function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
     let iMaximo = colunas;
     let jMaximo = linhas;
@@ -133,8 +182,21 @@ function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
     return "nenhum";
 }
 
+/**
+ * Verifica se há algum ganhador no estado atual, verificando
+ * se há 4 fichas alinhadas na diagonal, da esquerda para direita
+ * ou da direita para esquerda.
+ * 
+ * @param {string[][]} estadoAtual 
+ * @param {boolean} horizontal 
+ * @returns O ganhador dado o estado
+ */
 function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
+
+    // Faz uma cópia do estado, para garantir que não o altere
     const estadoAtual = JSON.parse(JSON.stringify(estadoAtualParametro));
+    
+    // Inverte a matriz, trocando as colunas
     if (inversa) {
         for (j = 0; j < colunas / 2; j++) {
             for (i = 0; i < linhas; i++) {
@@ -145,6 +207,7 @@ function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
         }
     }
 
+    // Verifica a partir de cada ponto de partida ixj
     for (let i = 0; i < linhas - 3; i++) {
         for (let j = 0; j < colunas - 3; j++) {
             let k = 0;
@@ -175,6 +238,12 @@ function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
     return "nenhum";
 }
 
+/**
+ * Torna a tela final visível caso haja um ganhador,
+ * atualizando o CSS para combinar a cor de fundo com a do ganhador.
+ * 
+ * @param {string} ganhador 
+ */
 function mostraTelaFinal(ganhador) {
     const telaFinal = document.querySelector(".final");
     const botaoFinal = document.querySelectorAll(".final__botao");
@@ -190,12 +259,21 @@ function mostraTelaFinal(ganhador) {
     document.getElementById("ganhador").textContent = ganhador;
 }
 
+/**
+ * Chama o algoritmo de escolha de jogadas e executa a alteração.
+ */
 function realizaJogadaIA() {
     if (!jogoAcabou(estado)) {
         adicionarFicha(minimax(estado));
     }
 }
 
+/**
+ * Dado o estado de uma partida, retorna as possíveis jogadas que podem ser escolhidas.
+ * 
+ * @param {string[][]} estadoAtual
+ * @returns Uma lista de jogadas que podem ser realizadas
+ */
 function getPossiveisJogadas(estadoAtual) {
     const jogadas = [];
     estadoAtual[0].forEach((valor, posicao) => {
@@ -204,6 +282,13 @@ function getPossiveisJogadas(estadoAtual) {
     return jogadas;
 }
 
+/**
+ * Retorna qual será o resultado de uma determinada ação em uma partida.
+ * 
+ * @param {string[][]} estadoAtual 
+ * @param {Number} posicao 
+ * @returns O resultado de uma jogada nessa posição
+ */
 function resultadoJogada(estadoAtual, posicao) {
     const resultado = JSON.parse(JSON.stringify(estadoAtual));
     let i = linhas - 1;
@@ -217,6 +302,14 @@ function resultadoJogada(estadoAtual, posicao) {
     return resultado;
 }
 
+/**
+ * Verifica qual é o ganhador de um determinado estado,
+ * caso o ganhador for o jogador azul retorna 1, 
+ * se for o amarelo retorna 0, e se não tiver ganhador retorna 0
+ * 
+ * @param {string[][]} estadoAtual
+ * @returns 1, -1 ou 0, dependendo do ganhador
+ */
 function utilidade(estadoAtual) {
     const ganhador = getGanhador(estadoAtual);
     if (ganhador === elementos.azul) {
@@ -227,6 +320,12 @@ function utilidade(estadoAtual) {
     return 0;
 }
 
+/**
+ * Aplica o algoritmo Minimax para calcular qual é a melhor jogada possível em dado estado.
+ * 
+ * @param {string[][]} estadoAtual 
+ * @returns A melhor ação que pode ser realizada nesse estado
+ */
 function minimax(estadoAtual) {
     if (jogoAcabou(estadoAtual)) return undefined;
     const nodes = getPossiveisJogadas(estadoAtual)
@@ -237,6 +336,7 @@ function minimax(estadoAtual) {
     let valores = nodes.map(node => minimaxRecursivo(node, 3));
     const indices = [];
     if (getJogadorDaVez(getJogadas(estadoAtual)) === elementos.azul) {
+        // Max Player => maximiza o valor
         const maximo = Math.max(...valores);
         valores.forEach((valor, index) => {
             if (valor === maximo) {
@@ -244,6 +344,7 @@ function minimax(estadoAtual) {
             }
         });
     } else {
+        // Min Player => minimiza o valor
         const minimo = Math.min(...valores);
         valores.forEach((valor, index) => {
             if (valor === minimo) {
@@ -251,6 +352,7 @@ function minimax(estadoAtual) {
             }
         });
     }
+    // Caso haja várias ações com um mesmo valor, escolhe uma delas aleatoriamente
     const index = indices.at((Math.random() * 100) % indices.length)
     let node = nodes[index];
     while (node?.pai !== undefined) {
@@ -259,12 +361,22 @@ function minimax(estadoAtual) {
     return node.jogada;
 }
 
+/**
+ * Usa recursividade para analisar o valor atrelado a um Node,
+ * analisando não só o estado desse Node, mas também o valor dos
+ * outros Nodes que podem ser alcançados por essa ação.
+ * 
+ * @param {Node} node
+ * @param {Number} profundidade
+ * @returns O valor relacionado a esse Node
+ */
 function minimaxRecursivo(node, profundidade) {
     if (profundidade === 0 || jogoAcabou(node.estadoAtual)) {
         return utilidade(node.estadoAtual);
     }
 
     if (getJogadorDaVez(getJogadas(node.estadoAtual)) === elementos.azul) {
+        // Max Player, o valor do Node é definido pelo maior valor que há entre seus Nodes filhos
         let valor = -100;
         getPossiveisJogadas(node.estadoAtual)
             .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
@@ -273,6 +385,7 @@ function minimaxRecursivo(node, profundidade) {
             });
         return valor;
     } else {
+        // Min Player, o valor do Node é definido pelo menor valor que pode ser alcançado por esse estado
         let valor = 100;
         getPossiveisJogadas(node.estadoAtual)
             .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
@@ -286,6 +399,7 @@ function minimaxRecursivo(node, profundidade) {
 document.addEventListener("DOMContentLoaded", () => {
     atualizaTextoJogadorDaVez();
     document.querySelectorAll(".matriz__botao").forEach(botao => {
+        // Adiciona o evento de click para os botões
         botao.addEventListener('click', () => {
             recebeAcaoDoUsuario(Number(botao.id.at(-1)));
             if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) {
@@ -297,6 +411,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 class Node {
     
+    /**
+     * Classe que representa um Node, estado possível que pode ser alcançado
+     * dado uma jogada, que armazena também qual estado o originou.
+     * 
+     * @param {string[][]} estadoAtual 
+     * @param {Node} pai 
+     * @param {Number} jogada 
+     */
     constructor(estadoAtual, pai, jogada) {
         this.estadoAtual = estadoAtual;
         this.pai = pai;

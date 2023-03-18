@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Adiciona a funcionalidade do link da Logo
     document.querySelector(".cabecalho__logo").addEventListener("click", () => {
         // Ambiente de produção
         if (estaEmProducao()) {
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Faz o botão de voltar ao início da tela final funcionar
     const link = document.getElementById("voltar-inicio");
     if (estaEmProducao()) {
         link.setAttribute("href", "/lig4");
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.setAttribute("href", "/");
     }
 
+    // Faz o botão de jgoar novamente da tela final funcionar
     document.getElementById("jogar-novamente").addEventListener("click", () => {
         document.location.reload();
     });
@@ -25,10 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+/**
+ * Verifica qual é o ambiente atual da aplicação através da URL
+ * 
+ * @returns Se o ambiente atual é o de produção ou o de desenvolvimento
+ */
 function estaEmProducao() {
     return !(document.location.href.includes("localhost") || document.location.href.includes("127.0.0.1"));
 }
 
+/**
+ * Renderiza a Matriz que representa o estado da partida no HTML,
+ * sendo representada por uma tabela de 6 linhas por 9 colunas
+ */
 function criarMatrizJogo() {
     const matriz = document.querySelector(".jogo__matriz");
     for (i = 0; i < 6; i++) {
@@ -44,6 +56,7 @@ function criarMatrizJogo() {
         matriz.appendChild(linha);
     }
 
+    // Adiciona os botões de ação
     const botoes = document.createElement("tr");
     for (k = 0; k < 9; k++) {
         const botao = document.createElement("td");
