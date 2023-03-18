@@ -8,7 +8,7 @@ Um jogo online desenvolvido com HTML, CSS e JS puros. Usando o algoritmo Minimax
 | :label: Tecnologias | HTML, CSS, JS
 | :rocket: URL         | <https://brenomorim.github.io/lig4/>
 
-![Exemplo de uma partida do jogo](https://github.com/BrenoMorim/resumo-html-css/blob/main/imagens/pagina-inicial.png?raw=true#vitrinedev)
+![Exemplo de uma partida do jogo](https://raw.githubusercontent.com/BrenoMorim/lig4/main/imagens/pagina-jogo.png?raw=true#vitrinedev)
 
 ---
 
@@ -61,3 +61,5 @@ Contém o "tabuleiro" do jogo, contendo o estado atual, assim como os botões de
 Aparece quando o jogo está com um vencedor definido, mostrando quem foi o ganhador e contendo links para jogar novamente ou voltar para a página inicial.
 
 ![Tela final do jogo](./imagens/tela-final.png)
+
+---
