@@ -289,12 +289,12 @@ function getPossiveisJogadas(estadoAtual) {
  * @param {Number} posicao 
  * @returns O resultado de uma jogada nessa posição
  */
-function resultadoJogada(estadoAtual, posicao) {
+function resultadoJogada(estadoAtual, posicao, jogador = getJogadorDaVez(getJogadas(estadoAtual))) {
     const resultado = JSON.parse(JSON.stringify(estadoAtual));
     let i = linhas - 1;
     while (i >= 0) {
         if (resultado[i][posicao] === elementos.vazio) {
-            resultado[i][posicao] = getJogadorDaVez(getJogadas(estadoAtual));
+            resultado[i][posicao] = jogador;
             break;
         }
         i--;
@@ -321,6 +321,25 @@ function utilidade(estadoAtual) {
 }
 
 /**
+ * Verifica se o oponente está a um passo da vitória, retornando
+ * a jogada que deve ser feita para impedir a vitória do oponente.
+ * 
+ * @param {string[][]} estadoAtual 
+ * @param {Number[]} possiveisJogadas 
+ * @returns A jogada que deve ser feita
+ */
+function impedirVitoria(estadoAtual, possiveisJogadas) {
+    const posicoes = []
+    possiveisJogadas.forEach(jogada => {
+        if (getGanhador(resultadoJogada(estadoAtual, jogada, elementos.azul)) === elementos.azul) {
+            posicoes.push(jogada);
+        }
+    });
+    if (posicoes.length > 0) return posicoes[0];
+    return undefined;
+}
+
+/**
  * Aplica o algoritmo Minimax para calcular qual é a melhor jogada possível em dado estado.
  * 
  * @param {string[][]} estadoAtual 
@@ -328,10 +347,16 @@ function utilidade(estadoAtual) {
  */
 function minimax(estadoAtual) {
     if (jogoAcabou(estadoAtual)) return undefined;
-    const nodes = getPossiveisJogadas(estadoAtual)
-        .map(jogada => {
-            return new Node(resultadoJogada(estadoAtual, jogada), undefined, jogada);
-        });
+    
+    const jogadasAtuais = getJogadas(estadoAtual);
+    const possiveisJogadas = getPossiveisJogadas(estadoAtual);
+
+    const jogada = impedirVitoria(estadoAtual, possiveisJogadas);
+    if (jogada !== undefined) return jogada;
+
+    const nodes = possiveisJogadas.map(jogada => {
+        return new Node(resultadoJogada(estadoAtual, jogada, getJogadorDaVez(jogadasAtuais)), undefined, jogada);
+    });
 
     let valores = nodes.map(node => minimaxRecursivo(node, 3));
     const indices = [];
