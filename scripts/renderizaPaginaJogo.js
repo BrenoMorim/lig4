@@ -24,6 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
         document.location.reload();
     });
 
+    // Botão de esconder tela final
+    document.getElementById("esconder-tela").addEventListener("click", () => {
+        document.querySelector(".final").style.display = "none";
+    });
+
+    if (!document.location.search.includes("ia")) {
+        document.getElementById("fazer-jogada-ia").style.display = "none";
+    }
+
     criarMatrizJogo();
 
 });

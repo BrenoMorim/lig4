@@ -5,8 +5,10 @@
 
 .jogo__texto {
     font-size: 2rem;
+    line-height: 2.5rem;
     font-weight: 300;
     padding: .5rem 1rem;
+    text-align: center;
 }
 
 .matriz__linha {
@@ -73,11 +75,9 @@
     flex-direction: column;
     z-index: 3;
     width: 70vw;
-    height: 50vh;
     max-width: 700px;
-    max-height: 500px;
     left: calc(60vw) / 2;
-    top: 25vh;
+    top: 15vh;
     position: absolute;
     padding: 1rem;
     gap: 2rem;
@@ -109,4 +109,10 @@
 
 .final__botao:hover {
     transform: scale(1.05);
+}
+
+#fazer-jogada-ia:disabled {
+    background-color: #EDEDED;
+    border-color: #222222;
+    cursor: not-allowed;
 }

@@ -7,6 +7,8 @@ const elementos = {
     vazio: "vazio"
 };
 
+const ganhadores = {};
+
 const estado = [
     `${elementos.vazio} `.repeat(colunas).trim().split(' '),
     `${elementos.vazio} `.repeat(colunas).trim().split(' '),
@@ -37,9 +39,18 @@ function getJogadorDaVez(jogadas) {
 function atualizaTextoJogadorDaVez() {
     const paragrafo = document.querySelector(".jogo__texto");
     const jogadorDaVez = getJogadorDaVez(jogadas);
-    document.getElementById("jogador-da-vez").textContent = jogadorDaVez;
+    const elementoJogadorDaVez = document.getElementById("jogador-da-vez");
+    elementoJogadorDaVez.textContent = jogadorDaVez;
     paragrafo.classList.add(`fundo--${jogadorDaVez}`);
     paragrafo.classList.remove(`fundo--${getJogadorDaVez(jogadas + 1)}`);
+    
+    if (oponente === "ia") {
+        if (jogadorDaVez === elementos.azul) {
+            elementoJogadorDaVez.textContent += " (Você) ";
+        } else {
+            elementoJogadorDaVez.textContent += " (IA) "
+        }
+    }
 }
 
 /**
@@ -125,22 +136,30 @@ function jogoAcabou(estadoAtual) {
  * @returns O ganhador dado o estado de uma partida
  */
 function getGanhador(estadoAtual) {
+    let chave = estadoAtual.flat(1).join("")
+        .replaceAll(elementos.vazio, 0)
+        .replaceAll(elementos.azul, 1)
+        .replaceAll(elementos.amarelo, 2);
+    if (ganhadores[chave] !== undefined) return ganhadores[chave];
+
+    let resultado = "nenhum";
     const ganhadorHorizontal = getGanhadorLinhaReta(estadoAtual, true);
     const ganhadorVertical = getGanhadorLinhaReta(estadoAtual, false);
     const ganhadorDiagonal = getGanhadorDiagonal(estadoAtual, false);
     const ganhadorDiagonalInversa = getGanhadorDiagonal(estadoAtual, true);
     
     if (ganhadorHorizontal !== "nenhum") {
-        return ganhadorHorizontal;
+        resultado = ganhadorHorizontal;
     } else if (ganhadorVertical !== "nenhum") {
-        return ganhadorVertical;
+        resultado = ganhadorVertical;
     } else if (ganhadorDiagonal !== "nenhum") {
-        return ganhadorDiagonal;
+        resultado = ganhadorDiagonal;
     } else if (ganhadorDiagonalInversa !== "nenhum") {
-        return ganhadorDiagonalInversa;
+        resultado = ganhadorDiagonalInversa;
     }
     
-    return "nenhum";
+    ganhadores[chave] = resultado;
+    return resultado;
 }
 
 /**
@@ -330,10 +349,10 @@ function utilidade(estadoAtual) {
  * @param {Number[]} possiveisJogadas 
  * @returns A jogada que deve ser feita
  */
-function impedirVitoria(estadoAtual, possiveisJogadas) {
+function impedirVitoria(estadoAtual, possiveisJogadas, jogador) {
     const posicoes = []
     possiveisJogadas.forEach(jogada => {
-        if (getGanhador(resultadoJogada(estadoAtual, jogada, elementos.azul)) === elementos.azul) {
+        if (getGanhador(resultadoJogada(estadoAtual, jogada, jogador)) === jogador) {
             posicoes.push(jogada);
         }
     });
@@ -353,8 +372,11 @@ function minimax(estadoAtual) {
     const jogadasAtuais = getJogadas(estadoAtual);
     const possiveisJogadas = getPossiveisJogadas(estadoAtual);
 
-    const jogada = impedirVitoria(estadoAtual, possiveisJogadas);
-    if (jogada !== undefined) return jogada;
+    const jogadaDefensiva = impedirVitoria(estadoAtual, possiveisJogadas, elementos.azul);
+    if (jogadaDefensiva !== undefined) return jogadaDefensiva;
+
+    const jogadaOfensiva = impedirVitoria(estadoAtual, possiveisJogadas, elementos.amarelo);
+    if (jogadaOfensiva !== undefined) return jogadaOfensiva;
 
     const nodes = possiveisJogadas.map(jogada => {
         return new Node(resultadoJogada(estadoAtual, jogada, getJogadorDaVez(jogadasAtuais)), undefined, jogada);
@@ -401,39 +423,48 @@ function minimaxRecursivo(node, profundidade) {
     if (profundidade === 0 || jogoAcabou(node.estadoAtual)) {
         return utilidade(node.estadoAtual);
     }
-
+    const nodes = getPossiveisJogadas(node.estadoAtual)
+        .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)));
+    
     if (getJogadorDaVez(getJogadas(node.estadoAtual)) === elementos.azul) {
         // Max Player, o valor do Node é definido pelo maior valor que há entre seus Nodes filhos
         let valor = -100;
-        getPossiveisJogadas(node.estadoAtual)
-            .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
-            .forEach(nodeFilho => {
-                valor = Math.max(valor, minimaxRecursivo(nodeFilho, profundidade - 1))
-            });
+        nodes.forEach(nodeFilho => {
+            valor = Math.max(valor, minimaxRecursivo(nodeFilho, profundidade - 1))
+        });
         return valor;
     } else {
         // Min Player, o valor do Node é definido pelo menor valor que pode ser alcançado por esse estado
         let valor = 100;
-        getPossiveisJogadas(node.estadoAtual)
-            .map(jogada => (new Node(resultadoJogada(node.estadoAtual, jogada), node, jogada)))
-            .forEach(nodeFilho => {
-                valor = Math.min(valor, minimaxRecursivo(nodeFilho, profundidade - 1))
-            });
+        nodes.forEach(nodeFilho => {
+            valor = Math.min(valor, minimaxRecursivo(nodeFilho, profundidade - 1))
+        });
         return valor;
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     atualizaTextoJogadorDaVez();
+
+    const botaoIA = document.getElementById("fazer-jogada-ia");
+
     document.querySelectorAll(".matriz__botao").forEach(botao => {
         // Adiciona o evento de click para os botões
         botao.addEventListener('click', () => {
             recebeAcaoDoUsuario(Number(botao.id.at(-1)));
-            if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) {
-                realizaJogadaIA();
-            }
+            botaoIA.removeAttribute("disabled");
         });
     });
+
+    botaoIA.addEventListener("click", () => {
+        console.log(getJogadorDaVez(jogadas));
+        console.log(oponente);
+        if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) {
+           realizaJogadaIA();
+           botaoIA.setAttribute("disabled", true);
+        }
+    });
+
 });
 
 class Node {
