@@ -76,6 +76,7 @@ function adicionarFicha(posicao) {
     ficha.classList.add("matriz__ficha");
     ficha.classList.add("animate__animated");
     ficha.classList.add("animate__bounceIn");
+    ficha.alt = `Ficha do jogador ${estado[i][posicao]} na posição ${i} por ${posicao}`;
     celula.appendChild(ficha);
     atualizaTextoJogadorDaVez();
     if (jogoAcabou(estado)) {
@@ -140,6 +141,7 @@ function getGanhador(estadoAtual) {
         .replaceAll(elementos.vazio, 0)
         .replaceAll(elementos.azul, 1)
         .replaceAll(elementos.amarelo, 2);
+
     if (ganhadores[chave] !== undefined) return ganhadores[chave];
 
     let resultado = "nenhum";
@@ -457,8 +459,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     botaoIA.addEventListener("click", () => {
-        console.log(getJogadorDaVez(jogadas));
-        console.log(oponente);
         if (oponente === "ia" && getJogadorDaVez(jogadas) === elementos.amarelo) {
            realizaJogadaIA();
            botaoIA.setAttribute("disabled", true);

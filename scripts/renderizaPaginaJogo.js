@@ -74,6 +74,7 @@ function criarMatrizJogo() {
         botao.textContent = "⇑";
         botao.className = "matriz__botao";
         botao.id = `botao-${k}`;
+        botao.setAttribute("aria-label", `Adicionar ficha na posição ${k}`);
         botoes.appendChild(botao);
     }
     matriz.appendChild(botoes);

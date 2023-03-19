@@ -77,7 +77,7 @@
     width: 70vw;
     max-width: 700px;
     left: calc(60vw) / 2;
-    top: 15vh;
+    top: 20vh;
     position: absolute;
     padding: 1rem;
     gap: 2rem;
@@ -109,6 +109,11 @@
 
 .final__botao:hover {
     transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.final__botao:active {
+    transform: scale(1.1);
 }
 
 #fazer-jogada-ia:disabled {

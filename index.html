@@ -4,27 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página inicial do Ligue 4, onde você pode ler sobre o jogo e acessar a página de jogo">
     <title>Ligue 4</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
     <header class="cabecalho animate__animated animate__backInDown">
-        <img class="cabecalho__logo" role="heading" src="assets/logo.png" alt="Logo do Ligue 4">
+        <img class="cabecalho__logo" width="223" height="125" src="assets/logo.png" alt="Logo do Ligue 4">
     </header>
     <main class="container">
         <section class="chamada container">
             <p class="chamada__texto fundo--azul animate__animated animate__backInDown">O objetivo do jogo é empilhar suas fichas nas colunas até conseguir colocar 4 fichas ligadas, na horizontal, vertical ou diagonal.</p>
             <div class="chamada__botoes">
                 <a class="chamada__botao fundo--amarelo animate__animated animate__backInDown" href="/jogo.html?oponente=ia" id="jogar-ia">
-                    <img src="assets/azul.png" class="chamada__ficha" aria-hidden="true">
+                    <img src="assets/azul.png" width="125" height="125" class="chamada__ficha" aria-hidden="true">
                     <span>Jogar contra a IA</span>
                 </a>
                 <a class="chamada__botao fundo--azul animate__animated animate__backInUp" href="/jogo.html?oponente=amigo" id="jogar-amigo">
-                    <img src="assets/amarelo.png" class="chamada__ficha" aria-hidden="true">
+                    <img src="assets/amarelo.png" width="125" height="125" class="chamada__ficha" aria-hidden="true">
                     <span>Jogar contra um Amigo</span>
                 </a>
             </div>

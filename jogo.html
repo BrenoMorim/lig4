@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página do jogo Ligue 4, onde você pode jogar uma partida contra um amigo ou inteligência artificial">
     <title>Ligue 4</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/jogo.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
     <header class="cabecalho animate__animated animate__backInDown">
-        <img class="cabecalho__logo" role="heading" src="assets/logo.png" alt="Logo do Ligue 4">
+        <img class="cabecalho__logo" width="223" height="125" src="assets/logo.png" alt="Logo do Ligue 4">
     </header>
     <main class="container">
         <section class="jogo container">
@@ -21,9 +25,9 @@
             <table class="jogo__matriz">
             </table>
             <p class="jogo__texto animate__animated animate__backInUp">Vez do jogador: <span id="jogador-da-vez"></span></p>
-            <button class="final__botao fundo--amarelo" id="fazer-jogada-ia" disabled>Fazer jogada IA</button>
+            <button class="final__botao fundo--amarelo animate__animated animate__backInUp" id="fazer-jogada-ia" disabled>Fazer jogada IA</button>
         </section>
-        <section class="final fundo--azul animate__animated animate__bounceIn oculto">
+        <section class="final fundo--azul animate__animated animate__bounceIn">
             <h2 class="final__texto">O vencedor foi:</h2>
             <h3 class="final__texto" id="ganhador"></h3>
             <button id="jogar-novamente" class="final__botao fundo--amarelo">Jogar Novamente</button>
