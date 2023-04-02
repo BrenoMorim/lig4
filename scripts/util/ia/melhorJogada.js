@@ -2,15 +2,15 @@ import getGanhador from "../getGanhador.js";
 import resultadoJogada from "./resultadoJogada.js";
 
 /**
- * Verifica se o oponente está a um passo da vitória, retornando
- * a jogada que deve ser feita para impedir a vitória do oponente.
+ * Verifica se o jogo está a um passo da vitória, retornando
+ * a melhor jogada que deve ser feita para alcançar a vitória ou impedir a do oponente.
  * 
  * @param {string[][]} estadoAtual 
  * @param {Number[]} possiveisJogadas
  * @param {string} jogador
  * @returns A jogada que deve ser feita
  */
-export default function impedirVitoria(estadoAtual, possiveisJogadas, jogador) {
+export default function melhorJogada(estadoAtual, possiveisJogadas, jogador) {
     const posicoes = [];
     possiveisJogadas.forEach(jogada => {
         if (getGanhador(resultadoJogada(estadoAtual, jogada, jogador)) === jogador) {

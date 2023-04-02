@@ -18,9 +18,9 @@ const oponente = document.location.search.includes("ia") ? "ia" : "amigo";
 
 document.addEventListener("DOMContentLoaded", () => {
     
-    atualizaTextoJogadorDaVez(oponente, estado);
     ativaLinkLogo();
     renderizaMatrizJogo();
+    atualizaTextoJogadorDaVez(oponente, estado);
     ativaBotoesJogo(estado, oponente);
     ativaBotoesTelaFinal();
 

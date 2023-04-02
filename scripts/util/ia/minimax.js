@@ -1,7 +1,7 @@
 import Node from "./Node.js";
 import getJogadas from "../getJogadas.js";
 import getPossiveisJogadas from "./getPossiveisJogadas.js";
-import impedirVitoria from "./impedirVitoria.js";
+import melhorJogada from "./melhorJogada.js";
 import jogoAcabou from "../jogoAcabou.js";
 import minimaxRecursivo from "./minimaxRecursivo.js";
 import getJogadorDaVez from "../getJogadorDaVez.js";
@@ -20,11 +20,12 @@ export default function minimax(estadoAtual) {
     const jogadasAtuais = getJogadas(estadoAtual);
     const possiveisJogadas = getPossiveisJogadas(estadoAtual);
 
-    const jogadaDefensiva = impedirVitoria(estadoAtual, possiveisJogadas, elementos.azul);
-    if (jogadaDefensiva !== undefined) return jogadaDefensiva;
+    // Early return para poder fazer as melhores jogadas com mais performance
+    const melhorJogadaOfensiva = melhorJogada(estadoAtual, possiveisJogadas, elementos.amarelo);
+    if (melhorJogadaOfensiva !== undefined) return melhorJogadaOfensiva;
 
-    const jogadaOfensiva = impedirVitoria(estadoAtual, possiveisJogadas, elementos.amarelo);
-    if (jogadaOfensiva !== undefined) return jogadaOfensiva;
+    const melhorJogadaDefensiva = melhorJogada(estadoAtual, possiveisJogadas, elementos.azul);
+    if (melhorJogadaDefensiva !== undefined) return melhorJogadaDefensiva;
 
     const nodes = possiveisJogadas.map(jogada => {
         return new Node(resultadoJogada(estadoAtual, jogada, getJogadorDaVez(jogadasAtuais)), undefined, jogada);
