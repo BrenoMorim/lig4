@@ -11,14 +11,14 @@ import getJogadorDaVez from "../getJogadorDaVez.js";
  * @returns O resultado de uma jogada nessa posição
  */
 export default function resultadoJogada(estadoAtual, posicao, jogador = getJogadorDaVez(getJogadas(estadoAtual))) {
-    const resultado = JSON.parse(JSON.stringify(estadoAtual));
-    let i = linhas - 1;
-    while (i >= 0) {
-        if (resultado[i][posicao] === elementos.vazio) {
-            resultado[i][posicao] = jogador;
-            break;
-        }
-        i--;
+  const resultado = JSON.parse(JSON.stringify(estadoAtual));
+  let i = linhas - 1;
+  while (i >= 0) {
+    if (resultado[i][posicao] === elementos.vazio) {
+      resultado[i][posicao] = jogador;
+      break;
     }
-    return resultado;
+    i--;
+  }
+  return resultado;
 }

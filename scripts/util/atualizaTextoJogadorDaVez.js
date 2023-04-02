@@ -10,19 +10,19 @@ import getJogadas from "./getJogadas.js";
  * @param {string[][]} estado
  */
 export default function atualizaTextoJogadorDaVez(oponente, estado) {
-    const paragrafo = document.querySelector(".jogo__texto");
-    const jogadas = getJogadas(estado);
-    const jogadorDaVez = getJogadorDaVez(jogadas);
-    const elementoJogadorDaVez = document.getElementById("jogador-da-vez");
-    elementoJogadorDaVez.textContent = jogadorDaVez;
-    paragrafo.classList.add(`fundo--${jogadorDaVez}`);
-    paragrafo.classList.remove(`fundo--${getJogadorDaVez(jogadas + 1)}`);
+  const paragrafo = document.querySelector(".jogo__texto");
+  const jogadas = getJogadas(estado);
+  const jogadorDaVez = getJogadorDaVez(jogadas);
+  const elementoJogadorDaVez = document.getElementById("jogador-da-vez");
+  elementoJogadorDaVez.textContent = jogadorDaVez;
+  paragrafo.classList.add(`fundo--${jogadorDaVez}`);
+  paragrafo.classList.remove(`fundo--${getJogadorDaVez(jogadas + 1)}`);
     
-    if (oponente === "ia") {
-        if (jogadorDaVez === elementos.azul) {
-            elementoJogadorDaVez.textContent += " (Você) ";
-        } else {
-            elementoJogadorDaVez.textContent += " (IA) ";
-        }
+  if (oponente === "ia") {
+    if (jogadorDaVez === elementos.azul) {
+      elementoJogadorDaVez.textContent += " (Você) ";
+    } else {
+      elementoJogadorDaVez.textContent += " (IA) ";
     }
+  }
 }

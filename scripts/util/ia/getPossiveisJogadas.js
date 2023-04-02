@@ -7,9 +7,9 @@ import elementos from "../elementos.js";
  * @returns Uma lista de jogadas que podem ser realizadas
  */
 export default function getPossiveisJogadas(estadoAtual) {
-    const jogadas = [];
-    estadoAtual[0].forEach((valor, posicao) => {
-        if (valor === elementos.vazio) jogadas.push(posicao);
-    });
-    return jogadas;
+  const jogadas = [];
+  estadoAtual[0].forEach((valor, posicao) => {
+    if (valor === elementos.vazio) jogadas.push(posicao);
+  });
+  return jogadas;
 }

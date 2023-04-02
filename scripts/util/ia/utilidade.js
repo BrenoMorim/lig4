@@ -10,11 +10,11 @@ import elementos from "../elementos.js";
  * @returns 1, -1 ou 0, dependendo do ganhador
  */
 export default function utilidade(estadoAtual) {
-    const ganhador = getGanhador(estadoAtual);
-    if (ganhador === elementos.azul) {
-        return 1;
-    } else if (ganhador === elementos.amarelo) {
-        return -1;
-    }
-    return 0;
+  const ganhador = getGanhador(estadoAtual);
+  if (ganhador === elementos.azul) {
+    return 1;
+  } else if (ganhador === elementos.amarelo) {
+    return -1;
+  }
+  return 0;
 }

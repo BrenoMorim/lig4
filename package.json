@@ -4,8 +4,7 @@
   "description": "Um jogo online desenvolvido com HTML, CSS e JS puros. Usando o algoritmo Minimax para criar uma inteligência artificial capaz de sempre vencer nesse jogo.",
   "main": "index.html",
   "type": "module",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BrenoMorim/lig4.git"
@@ -16,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/BrenoMorim/lig4/issues"
   },
-  "homepage": "https://brenomorim.github.io/lig4/"
+  "homepage": "https://brenomorim.github.io/lig4/",
+  "devDependencies": {
+    "eslint": "^8.37.0"
+  }
 }

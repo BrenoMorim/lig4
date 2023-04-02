@@ -9,7 +9,7 @@ import minimax from "./minimax.js";
  * @param {string} oponente
  */
 export default function realizaJogadaIA(estado, oponente) {
-    if (!jogoAcabou(estado)) {
-        adicionarFicha(minimax(estado), estado, oponente);
-    }
+  if (!jogoAcabou(estado)) {
+    adicionarFicha(minimax(estado), estado, oponente);
+  }
 }

@@ -14,7 +14,7 @@ Um jogo online desenvolvido com HTML, CSS e JS puros. Usando o algoritmo Minimax
 
 ## Detalhes
 
-O projeto foi desenvolvido baseando-se nos conteúdos do curso CS50AI, que introduz conceitos sobre inteligência artificial e algoritmos, assim como os treinamentos de JavaScript e front-end da Alura. O projeto está em produção através do GitHub Pages e utiliza somente JavaScript, HTML e CSS puros. A biblioteca Animate.css foi utilizada para fazer as animações.
+O projeto foi desenvolvido baseando-se nos conteúdos do curso CS50AI, que introduz conceitos sobre inteligência artificial e algoritmos, assim como os treinamentos de JavaScript e front-end da Alura. O projeto está em produção através do GitHub Pages e utiliza somente JavaScript, HTML e CSS puros. A biblioteca Animate.css foi utilizada para fazer as animações. A biblioteca ESLint foi utilizada para encontrar bugs mais facilmente, assim como manter um padrão de estilo no código.
 
 ---
 

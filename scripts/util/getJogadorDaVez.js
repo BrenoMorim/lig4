@@ -8,7 +8,7 @@ import elementos from "./elementos.js";
  * @returns {string} O jogador da vez
  */
 export default function getJogadorDaVez(jogadas) {
-    if (jogadas % 2 == 0) 
-        return elementos.azul;
-    return elementos.amarelo;
+  if (jogadas % 2 == 0) 
+    return elementos.azul;
+  return elementos.amarelo;
 }

@@ -17,27 +17,27 @@ import { linhas } from "./dimensoes.js";
  * @param {string} oponente: Contra quem o jogador está jogando
  */
 export default function adicionarFicha(posicao, estado, oponente) {
-    let i = linhas - 1;
-    while (i >= 0) {
-        if (estado[i][posicao] === elementos.vazio) {
-            estado[i][posicao] = getJogadorDaVez(getJogadas(estado));
-            break;
-        }
-        i--;
+  let i = linhas - 1;
+  while (i >= 0) {
+    if (estado[i][posicao] === elementos.vazio) {
+      estado[i][posicao] = getJogadorDaVez(getJogadas(estado));
+      break;
     }
-    const celula = document.getElementById(`${i}x${posicao}`);
-    const container = document.createElement("div");
-    container.className = "ficha__container";
-    const ficha = document.createElement("img");
-    ficha.src = `assets/${estado[i][posicao]}.png`;
-    ficha.classList.add("matriz__ficha");
-    ficha.classList.add("animate__animated");
-    ficha.classList.add("animate__bounceIn");
-    ficha.alt = `Ficha do jogador ${estado[i][posicao]} na posição ${i} por ${posicao}`;
-    container.appendChild(ficha);
-    celula.appendChild(container);
-    atualizaTextoJogadorDaVez(oponente, estado);
-    if (jogoAcabou(estado)) {
-        mostraTelaFinal(getGanhador(estado));
-    }
+    i--;
+  }
+  const celula = document.getElementById(`${i}x${posicao}`);
+  const container = document.createElement("div");
+  container.className = "ficha__container";
+  const ficha = document.createElement("img");
+  ficha.src = `assets/${estado[i][posicao]}.png`;
+  ficha.classList.add("matriz__ficha");
+  ficha.classList.add("animate__animated");
+  ficha.classList.add("animate__bounceIn");
+  ficha.alt = `Ficha do jogador ${estado[i][posicao]} na posição ${i} por ${posicao}`;
+  container.appendChild(ficha);
+  celula.appendChild(container);
+  atualizaTextoJogadorDaVez(oponente, estado);
+  if (jogoAcabou(estado)) {
+    mostraTelaFinal(getGanhador(estado));
+  }
 }

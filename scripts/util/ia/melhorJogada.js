@@ -11,12 +11,12 @@ import resultadoJogada from "./resultadoJogada.js";
  * @returns A jogada que deve ser feita
  */
 export default function melhorJogada(estadoAtual, possiveisJogadas, jogador) {
-    const posicoes = [];
-    possiveisJogadas.forEach(jogada => {
-        if (getGanhador(resultadoJogada(estadoAtual, jogada, jogador)) === jogador) {
-            posicoes.push(jogada);
-        }
-    });
-    if (posicoes.length > 0) return posicoes[0];
-    return undefined;
+  const posicoes = [];
+  possiveisJogadas.forEach(jogada => {
+    if (getGanhador(resultadoJogada(estadoAtual, jogada, jogador)) === jogador) {
+      posicoes.push(jogada);
+    }
+  });
+  if (posicoes.length > 0) return posicoes[0];
+  return undefined;
 }

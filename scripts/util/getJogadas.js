@@ -9,11 +9,11 @@ import elementos from "./elementos.js";
  * @returns Quantas jogadas foram feitas
  */
 export default function getJogadas(estadoAtual) {
-    let contagem = 0;
-    for (let i = 0; i < linhas; i++) {
-        for (let j = 0; j < colunas; j++) {
-            if (estadoAtual[i][j] !== elementos.vazio) contagem++;
-        }
+  let contagem = 0;
+  for (let i = 0; i < linhas; i++) {
+    for (let j = 0; j < colunas; j++) {
+      if (estadoAtual[i][j] !== elementos.vazio) contagem++;
     }
-    return contagem;
+  }
+  return contagem;
 }
