@@ -2,6 +2,8 @@
     align-items: flex-start;
     row-gap: 2rem;
     max-width: 750px;
+    min-height: 70vh;
+    justify-content: center;
 }
 
 .chamada__texto {
@@ -10,13 +12,6 @@
     line-height: 2.5rem;
     text-align: center;
     padding: 1rem;
-}
-
-@media screen  and (max-width: 1024px) {
-    .chamada__texto {
-        font-size: 1.25rem;
-        line-height: 1.5rem;
-    }
 }
 
 .chamada__botoes {
@@ -47,7 +42,11 @@
     text-decoration: none;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 720px) {
+    .chamada__texto {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+    }
     .chamada__botao {
         font-size: 1.25rem;       
     }

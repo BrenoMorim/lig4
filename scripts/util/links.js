@@ -45,6 +45,7 @@ export function ativaBotoesTelaFinal() {
   // Botão de esconder tela final
   document.getElementById("esconder-tela").addEventListener("click", () => {
     document.querySelector(".final").style.display = "none";
+    document.getElementById("mostrar-tela-final").style.display = "inline-block"; 
   });
 
   if (!document.location.search.includes("ia")) {

@@ -1,5 +1,5 @@
-import { colunas, linhas } from "./dimensoes.js";
-import elementos from "./elementos.js";
+import { colunas, linhas } from "../data/dimensoes.js";
+import elementos from "../data/elementos.js";
 
 /**
  * Calcula quantas jogadas já foram feitas na partida,

@@ -5,7 +5,7 @@ import resultadoJogada from "./resultadoJogada.js";
 import utilidade from "./utilidade.js";
 import getPossiveisJogadas from "./getPossiveisJogadas.js";
 import Node from "./Node.js";
-import elementos from "../elementos.js";
+import elementos from "../../data/elementos.js";
 
 /**
  * Usa recursividade para analisar o valor atrelado a um Node,

@@ -1,4 +1,4 @@
-import elementos from "./elementos.js";
+import elementos from "../data/elementos.js";
 
 /**
  * Torna a tela final visível caso haja um ganhador,
@@ -19,4 +19,12 @@ export default function mostraTelaFinal(ganhador) {
     botaoFinal.forEach(botao => botao.classList.add("fundo--amarelo"));
   }
   document.getElementById("ganhador").textContent = ganhador;
+
+  const botaoMostrarTelaFinal = document.getElementById("mostrar-tela-final");
+  botaoMostrarTelaFinal.classList.add(`fundo--${ganhador}`);
+  botaoMostrarTelaFinal.addEventListener("click", () => {
+    mostraTelaFinal(ganhador);
+    botaoMostrarTelaFinal.style.display = "none";
+  });
+
 }

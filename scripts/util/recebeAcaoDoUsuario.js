@@ -1,4 +1,4 @@
-import elementos from "./elementos.js";
+import elementos from "../data/elementos.js";
 import jogoAcabou from "./jogoAcabou.js";
 import adicionarFicha from "./adicionarFicha.js";
 import getJogadorDaVez from "./getJogadorDaVez.js";

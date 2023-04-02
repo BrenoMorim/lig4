@@ -1,6 +1,6 @@
-import { colunas, linhas } from "./dimensoes.js";
-import elementos from "./elementos.js";
-import ganhadores from "./ganhadores.js";
+import { colunas, linhas } from "../data/dimensoes.js";
+import elementos from "../data/elementos.js";
+import ganhadores from "../data/ganhadores.js";
 
 /**
  * Retorna o ganhador da partida, retornando amarelo, azul ou

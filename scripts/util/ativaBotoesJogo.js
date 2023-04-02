@@ -1,7 +1,7 @@
 import recebeAcaoDoUsuario from "./recebeAcaoDoUsuario.js";
 import getJogadorDaVez from "./getJogadorDaVez.js";
 import realizaJogadaIA from "./ia/realizaJogadaIA.js";
-import elementos from "./elementos.js";
+import elementos from "../data/elementos.js";
 import getJogadas from "./getJogadas.js";
 
 /**

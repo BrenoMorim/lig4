@@ -1,4 +1,4 @@
-import elementos from "./elementos.js";
+import elementos from "../data/elementos.js";
 
 /**
  * Calcula qual é o jogador da vez, baseado no total

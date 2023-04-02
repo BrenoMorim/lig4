@@ -1,4 +1,4 @@
-import { linhas, colunas } from "./dimensoes.js";
+import { linhas, colunas } from "../data/dimensoes.js";
 
 /**
  * Renderiza a Matriz que representa o estado da partida no HTML,

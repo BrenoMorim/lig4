@@ -1,11 +1,11 @@
-import elementos from "./elementos.js";
+import elementos from "../data/elementos.js";
 import getJogadorDaVez from "./getJogadorDaVez.js";
 import getGanhador from "./getGanhador.js";
 import atualizaTextoJogadorDaVez from "./atualizaTextoJogadorDaVez.js";
 import mostraTelaFinal from "./mostraTelaFinal.js";
 import jogoAcabou from "./jogoAcabou.js";
 import getJogadas from "./getJogadas.js";
-import { linhas } from "./dimensoes.js";
+import { linhas } from "../data/dimensoes.js";
 
 /**
  * Insere uma ficha da cor do jogador da vez em dada posição.

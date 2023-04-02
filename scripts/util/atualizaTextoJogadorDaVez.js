@@ -1,5 +1,5 @@
 import getJogadorDaVez from "./getJogadorDaVez.js";
-import elementos from "./elementos.js";
+import elementos from "../data/elementos.js";
 import getJogadas from "./getJogadas.js";
 
 /**

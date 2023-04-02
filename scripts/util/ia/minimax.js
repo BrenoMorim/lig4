@@ -5,7 +5,7 @@ import melhorJogada from "./melhorJogada.js";
 import jogoAcabou from "../jogoAcabou.js";
 import minimaxRecursivo from "./minimaxRecursivo.js";
 import getJogadorDaVez from "../getJogadorDaVez.js";
-import elementos from "../elementos.js";
+import elementos from "../../data/elementos.js";
 import resultadoJogada from "./resultadoJogada.js";
 
 /**
