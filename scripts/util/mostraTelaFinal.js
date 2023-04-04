@@ -8,7 +8,7 @@ import elementos from "../data/elementos.js";
  */
 export default function mostraTelaFinal(ganhador) {
   const telaFinal = document.querySelector(".final");
-  const botaoFinal = document.querySelectorAll(".final__botao");
+  const botaoFinal = telaFinal.querySelectorAll(".final__botao");
   telaFinal.style.display = "flex";
 
   if (ganhador === elementos.amarelo) {
@@ -16,12 +16,18 @@ export default function mostraTelaFinal(ganhador) {
     telaFinal.classList.remove("fundo--azul");
 
     botaoFinal.forEach(botao => botao.classList.add("fundo--azul"));
-    botaoFinal.forEach(botao => botao.classList.add("fundo--amarelo"));
   }
   document.getElementById("ganhador").textContent = ganhador;
 
   const botaoMostrarTelaFinal = document.getElementById("mostrar-tela-final");
-  botaoMostrarTelaFinal.classList.add(`fundo--${ganhador}`);
+
+  if (Object.values(elementos).includes(ganhador)) {
+    botaoMostrarTelaFinal.classList.add(`fundo--${ganhador}`);
+  } else {
+    // Pode ser que tenha dado empate, então o padrão será a cor azul
+    botaoMostrarTelaFinal.classList.add("fundo--azul");
+  }
+  
   botaoMostrarTelaFinal.addEventListener("click", () => {
     mostraTelaFinal(ganhador);
     botaoMostrarTelaFinal.style.display = "none";

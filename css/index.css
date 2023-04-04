@@ -1,8 +1,9 @@
+@import url("_variaveis.css");
+
 .chamada {
-    align-items: flex-start;
+    align-items: center;
     row-gap: 2rem;
     max-width: 750px;
-    min-height: 70vh;
     justify-content: center;
 }
 
@@ -38,7 +39,7 @@
     line-height: 1.75rem;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #000000;
+    color: var(--preto);
     text-decoration: none;
 }
 

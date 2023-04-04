@@ -1,3 +1,5 @@
+@import url("_variaveis.css");
+
 .jogo {
     padding: 2rem 0;
     gap: 2rem;
@@ -21,8 +23,8 @@
     min-width: 2.25rem;
     max-height: 2.25rem;
     max-width: 2.25rem;
-    border-left: 3px solid #222222;
-    border-right: 3px solid #222222;
+    border-left: 3px solid var(--preto);
+    border-right: 3px solid var(--preto);
     box-sizing: border-box;
     display: table-cell;
 }
@@ -46,7 +48,7 @@
 
 .matriz__botao:hover {
     transform: scale(1.15);
-    color: #999999;
+    color: var(--cinza);
 }
 
 .matriz__botoes {
@@ -105,7 +107,7 @@
     transition: all 500ms;
     text-align: center;
     font-family: 'League Spartan', sans-serif;
-    color: #000000;
+    color: var(--preto);
     display: inline-block;
     align-self: center;
     min-width: 65%;
@@ -123,7 +125,7 @@
 }
 
 #fazer-jogada-ia:disabled {
-    background-color: #EDEDED;
-    border-color: #222222;
+    background-color: var(--cinza-claro);
+    border-color: var(--preto);
     cursor: not-allowed;
 }
