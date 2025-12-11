@@ -9,6 +9,7 @@
     font-weight: 300;
     padding: .5rem 1rem;
     text-align: center;
+    user-select: none;
 }
 
 .matriz__linha {
@@ -42,6 +43,7 @@
     text-align: center;
     cursor: pointer;
     transition: 500ms all;
+    user-select: none;
 }
 
 .matriz__botao:hover {
