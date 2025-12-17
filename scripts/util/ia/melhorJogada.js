@@ -13,7 +13,7 @@ import resultadoJogada from "./resultadoJogada.js";
 export default function melhorJogada(estadoAtual, possiveisJogadas, jogador) {
   const posicoes = [];
   possiveisJogadas.forEach(jogada => {
-    if (getGanhador(resultadoJogada(estadoAtual, jogada, jogador)) === jogador) {
+    if (getGanhador(resultadoJogada(estadoAtual, jogada, jogador)).jogador === jogador) {
       posicoes.push(jogada);
     }
   });

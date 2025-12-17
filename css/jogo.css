@@ -3,6 +3,10 @@
     gap: 2rem;
 }
 
+.jogo__matriz {
+    position: relative;
+}
+
 .jogo__texto {
     font-size: 2rem;
     line-height: 2.5rem;
@@ -129,3 +133,4 @@
     border-color: var(--preto);
     cursor: not-allowed;
 }
+

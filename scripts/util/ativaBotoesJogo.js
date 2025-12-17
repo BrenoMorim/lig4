@@ -3,6 +3,7 @@ import getJogadorDaVez from "./getJogadorDaVez.js";
 import realizaJogadaIA from "./ia/realizaJogadaIA.js";
 import elementos from "../data/elementos.js";
 import getJogadas from "./getJogadas.js";
+import jogoAcabou from "./jogoAcabou.js";
 
 /**
  * Configura o comportamento dos botões da página de jogo
@@ -21,7 +22,7 @@ export default function ativaBotoesJogo(estado, oponente) {
     // Adiciona o evento de click para os botões
     botao.addEventListener("click", () => {
       recebeAcaoDoUsuario(Number(botao.id.at(-1)), estado, oponente);
-      botaoIA.removeAttribute("disabled");
+      if (!jogoAcabou(estado)) botaoIA.removeAttribute("disabled");
     });
   });
 

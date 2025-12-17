@@ -6,6 +6,7 @@ import mostraTelaFinal from "./mostraTelaFinal.js";
 import jogoAcabou from "./jogoAcabou.js";
 import getJogadas from "./getJogadas.js";
 import { linhas } from "../data/dimensoes.js";
+import { desenhaLinhaVencedora } from "./desenhaLinhaVencedora.js";
 
 /**
  * Insere uma ficha da cor do jogador da vez em dada posição.
@@ -38,6 +39,8 @@ export default function adicionarFicha(posicao, estado, oponente) {
   celula.appendChild(container);
   atualizaTextoJogadorDaVez(oponente, estado);
   if (jogoAcabou(estado)) {
-    mostraTelaFinal(getGanhador(estado));
+    const ganhador = getGanhador(estado);
+    desenhaLinhaVencedora(ganhador.posicoes);
+    mostraTelaFinal(ganhador.jogador);
   }
 }

@@ -9,7 +9,7 @@ import getGanhador from "./getGanhador.js";
  * @returns {boolean} Se o jogo está acabado
  */
 export default function jogoAcabou(estadoAtual) {
-  if (getGanhador(estadoAtual) !== "nenhum") {
+  if (getGanhador(estadoAtual).jogador !== "nenhum") {
     return true;
   }
   if (estadoAtual[0].join(" ").includes(elementos.vazio) === false) {

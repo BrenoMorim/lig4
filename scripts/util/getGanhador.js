@@ -17,21 +17,12 @@ export default function getGanhador(estadoAtual) {
 
   if (ganhadores[chave] !== undefined) return ganhadores[chave];
 
-  let resultado = "nenhum";
-  const ganhadorHorizontal = getGanhadorLinhaReta(estadoAtual, true);
-  const ganhadorVertical = getGanhadorLinhaReta(estadoAtual, false);
-  const ganhadorDiagonal = getGanhadorDiagonal(estadoAtual, false);
-  const ganhadorDiagonalInversa = getGanhadorDiagonal(estadoAtual, true);
-    
-  if (ganhadorHorizontal !== "nenhum") {
-    resultado = ganhadorHorizontal;
-  } else if (ganhadorVertical !== "nenhum") {
-    resultado = ganhadorVertical;
-  } else if (ganhadorDiagonal !== "nenhum") {
-    resultado = ganhadorDiagonal;
-  } else if (ganhadorDiagonalInversa !== "nenhum") {
-    resultado = ganhadorDiagonalInversa;
-  }
+  const resultado =
+    getGanhadorLinhaReta(estadoAtual, true) ||
+    getGanhadorLinhaReta(estadoAtual, false) ||
+    getGanhadorDiagonal(estadoAtual, false) ||
+    getGanhadorDiagonal(estadoAtual, true) || 
+    { jogador: "nenhum", posicoes: [] };
     
   ganhadores[chave] = resultado;
   return resultado;
@@ -46,36 +37,38 @@ export default function getGanhador(estadoAtual) {
  * @returns O ganhador dado o estado
  */
 function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
-  let iMaximo = colunas;
-  let jMaximo = linhas;
-  if (horizontal) {
-    iMaximo = linhas;
-    jMaximo = colunas;
-  }
+  let iMaximo = horizontal ? linhas : colunas;
+  let jMaximo = horizontal ? colunas : linhas;
+
   for (let i = 0; i < iMaximo; i++) {
-    let contagemAzul = 0;
-    let contagemAmarelo = 0;
+    let contagem = 0;
+    let jogadorAtual = null;
+
     for (let j = 0; j < jMaximo; j++) {
-      const celula = horizontal ? estadoAtual[i][j] : estadoAtual[j][i];
-      if (celula == elementos.azul) {
-        contagemAzul++;
-        if (contagemAzul >= 4) {
-          return elementos.azul;
-        }
+      const celula = horizontal
+        ? estadoAtual[i][j]
+        : estadoAtual[j][i];
+
+      if (celula !== elementos.vazio && celula === jogadorAtual) {
+        contagem++;
       } else {
-        contagemAzul = 0;
+        jogadorAtual = celula;
+        contagem = celula === elementos.vazio ? 0 : 1;
       }
-      if (celula == elementos.amarelo) {
-        contagemAmarelo++;
-        if (contagemAmarelo >= 4) {
-          return elementos.amarelo;
-        }
-      } else {
-        contagemAmarelo = 0;
+
+      if (contagem === 4) {
+        return {
+          jogador: jogadorAtual,
+          posicoes: Array.from({ length: 4 }, (_, k) =>
+            horizontal
+              ? { i, j: j - 3 + k }
+              : { i: j - 3 + k, j: i }
+          )
+        };
       }
     }
   }
-  return "nenhum";
+  return null;
 }
 
 /**
@@ -88,48 +81,44 @@ function getGanhadorLinhaReta(estadoAtual, horizontal = true) {
  * @returns O ganhador dado o estado
  */
 function getGanhadorDiagonal(estadoAtualParametro, inversa = false) {
-
-  // Faz uma cópia do estado, para garantir que não o altere
   const estadoAtual = JSON.parse(JSON.stringify(estadoAtualParametro));
-    
-  // Inverte a matriz, trocando as colunas
+
   if (inversa) {
     for (let j = 0; j < colunas / 2; j++) {
       for (let i = 0; i < linhas; i++) {
-        let temp = estadoAtual[i][j];
-        estadoAtual[i][j] = estadoAtual[i][colunas - j - 1];
-        estadoAtual[i][colunas - j - 1] = temp;
+        [estadoAtual[i][j], estadoAtual[i][colunas - j - 1]] =
+        [estadoAtual[i][colunas - j - 1], estadoAtual[i][j]];
       }
     }
   }
 
-  // Verifica a partir de cada ponto de partida ixj
   for (let i = 0; i < linhas - 3; i++) {
     for (let j = 0; j < colunas - 3; j++) {
-      let k = 0;
-      let contagemAzul = 0;
-      let contagemAmarelo = 0;
-      while (i + k < linhas && j + k < colunas) {
+      let contagem = 0;
+      let jogadorAtual = null;
+
+      for (let k = 0; i + k < linhas && j + k < colunas; k++) {
         const celula = estadoAtual[i + k][j + k];
-        if (celula === elementos.azul) {
-          contagemAzul++;
-          if (contagemAzul >= 4) {
-            return elementos.azul;
-          }
+
+        if (celula !== elementos.vazio && celula === jogadorAtual) {
+          contagem++;
         } else {
-          contagemAzul = 0;
+          jogadorAtual = celula;
+          contagem = celula === elementos.vazio ? 0 : 1;
         }
-        if (celula === elementos.amarelo) {
-          contagemAmarelo++;
-          if (contagemAmarelo >= 4) {
-            return elementos.amarelo;
-          }
-        } else {
-          contagemAmarelo = 0;
+
+        if (contagem === 4) {
+          const posicoes = Array.from({ length: 4 }, (_, n) => {
+            const col = j + k - 3 + n;
+            return inversa
+              ? { i: i + k - 3 + n, j: colunas - col - 1 }
+              : { i: i + k - 3 + n, j: col };
+          });
+
+          return { jogador: jogadorAtual, posicoes };
         }
-        k++;
       }
     }
   }
-  return "nenhum";
+  return null;
 }
